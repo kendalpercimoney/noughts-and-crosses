@@ -190,9 +190,12 @@ def print_scrn():
 
 def chk_win():
   global playerWin
-  if (one and five and nine  == x_o):
+  if (one and five and nine == x_o or three and five and seven == x_o):
     playerWin = True
-  
+  if (one and three and seven == x_o or two and five and eight == x_o or three and six and nine == x_o):
+    playerWin = True
+  if (one and two and three == x_o or four and five and six == x_o or seven and eight and nine == x_o):
+    playerWin = True
 
     
 
@@ -234,18 +237,23 @@ def main_game():
           main_game()
         if(answer == "N"):
           end = True
+          return
         else:
           print("Sorry! I don't understand that answer. Try again.")
 
         
     elif (computerWin == True):
       print("Sorry, you lost. Would you like to play again? Y or N") 
-      answer = input()
-      if (answer == "y"):
-        print ('Okay!')
-        main_game()
-      elif(answer == "n"):
-        sys.exit()
+      while repeats == 1:
+        answer = input()
+        if (answer == "Y"):
+          print ('Okay!')
+          main_game()
+        if(answer == "N"):
+          end = True
+          return
+        else:
+          print("Sorry! I don't understand that answer. Try again.")
 
 
 
@@ -253,8 +261,7 @@ def main_game():
     counter = counter + 1
     if (counter == 5):
       end = True
-
-
+  return
 #main:
 
 main_game()
