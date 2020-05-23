@@ -9,6 +9,7 @@ end = False
 playerWin = False
 computerWin = False
 repeats = 1
+computer_piece = "O"
 
 #play variables
 one = ("1")
@@ -33,6 +34,7 @@ def reset_board():
   global eight
   global nine
   global playerWin
+  global computerWin
   one = ("1")
   two = ("2")
   three = ("3")
@@ -43,6 +45,7 @@ def reset_board():
   eight = ("8")
   nine = ("9")
   playerWin = False
+  computerWin = False
 
 def intro_scrn(): #print intro screen
     print ()
@@ -109,48 +112,48 @@ def comp_play(a): #assign the piece to its respective place
     global x_o
     
     if (a == str(1)):
-      if (one != x_o and one != "O"):
-        one = ("O")
+      if (one != x_o and one != computer_piece):
+        one = (computer_piece)
       else:
         comp_play(str(randint (1, 9)))
     elif (a == str(2)):
-      if (two != x_o and two != "O"):
-        two = ("O")
+      if (two != x_o and two != computer_piece):
+        two = (computer_piece)
       else:
         comp_play(str(randint (1, 9)))
     elif (a == str(3)):
-      if (three != x_o and three != "O"):
-        three = ("O")
+      if (three != x_o and three != computer_piece):
+        three = (computer_piece)
       else:
         comp_play(str(randint (1, 9)))
     elif (a == str(4)):
-      if (four != x_o and four != "O"):
-        four = ("O")
+      if (four != x_o and four != computer_piece):
+        four = (computer_piece)
       else:
         comp_play(str(randint (1, 9)))
     elif (a == str(5)):
-      if (five != x_o and five != "O"):
-        five = ("O")
+      if (five != x_o and five != computer_piece):
+        five = (computer_piece)
       else:
         comp_play(str(randint (1, 9)))
     elif (a == str(6)):
-      if (six != x_o and six != "O"):
-        six = ("O")
+      if (six != x_o and six != computer_piece):
+        six = (computer_piece)
       else:
         comp_play(str(randint (1, 9)))
     elif (a == str(7)):
-      if (seven != x_o and seven != "O"):
-        seven = ("O")
+      if (seven != x_o and seven != computer_piece):
+        seven = (computer_piece)
       else:
         comp_play(str(randint (1, 9)))
     elif (a == str(8)):
-      if (eight != x_o and eight != "O"):
-        eight = ("O")
+      if (eight != x_o and eight != computer_piece):
+        eight = (computer_piece)
       else:
         comp_play(str(randint (1, 9)))
     elif (a == str(9)):
-      if (nine != x_o and nine != "O"):
-        nine = ("O")
+      if (nine != x_o and nine != computer_piece):
+        nine = (computer_piece)
       else:
         comp_play(str(randint (1, 9)))
 
@@ -190,14 +193,26 @@ def print_scrn():
 
 def chk_win():
   global playerWin
-  if (one and five and nine == x_o or three and five and seven == x_o):
+  global computerWin
+  if ((one == x_o and five == x_o and nine == x_o) or (three == x_o and five == x_o and seven == x_o)):
     playerWin = True
-  if (one and three and seven == x_o or two and five and eight == x_o or three and six and nine == x_o):
+  if ((one == x_o and four == x_o and seven == x_o) or (two == x_o and five == x_o and eight == x_o) or (three == x_o and six == x_o and nine == x_o)):
     playerWin = True
-  if (one and two and three == x_o or four and five and six == x_o or seven and eight and nine == x_o):
+  if ((one == x_o and two == x_o and three == x_o) or (four == x_o and five == x_o and six == x_o) or (seven == x_o and eight == x_o and nine == x_o)):
     playerWin = True
+  if ((one == computer_piece and five == computer_piece and nine == computer_piece) or (three == computer_piece and five == computer_piece and seven == computer_piece)):
+    computerWin = True
+  if ((one == computer_piece and four == computer_piece and seven == computer_piece) or (two == computer_piece and five == computer_piece and eight == computer_piece) or (three == computer_piece and six == computer_piece and nine == computer_piece)):
+    computerWin = True
+  if ((one == computer_piece and two == computer_piece and three == computer_piece) or (four == computer_piece and five == computer_piece and six == computer_piece) or (seven == computer_piece and eight == computer_piece and nine == computer_piece)):
+    computerWin = True
 
-    
+def input_check(): 
+  global computer_piece
+  global x_o
+  if x_o == "O":
+    computer_piece = "X"
+
 
 #main game:
 def main_game():
@@ -211,6 +226,7 @@ def main_game():
   intro_scrn()
   print("Would you like to play as X or O? (please enter one)")
   x_o = input()
+  input_check()
   print("You have chosen " + x_o + " as the piece you would like to play with.")
   print_scrn()
   counter = 0
@@ -219,30 +235,40 @@ def main_game():
     print("Please select the number of the block in which you would like to place your piece:")
 
     #process
-    input_num = input() #!add a check here
+    input_num = input()
+    
     change_num(input_num)
 
-    comp_play(str(randint(1,9)))
-    chk_win()
-    print_scrn()
-
-    #replay if yes
+    chk_win() #check to see if player has won
+    
     if (playerWin == True): 
+      print_scrn()
       print("You won! Would you like to play again? Y or N")
+      
       
       while repeats == 1:
         answer = input()
-        if (answer == "Y"):
+        if (answer == "Y" or answer == "y"):
           print ('Okay!')
           main_game()
-        if(answer == "N"):
+        if(answer == "N" or answer == "n"):
           end = True
           return
         else:
           print("Sorry! I don't understand that answer. Try again.")
 
         
-    elif (computerWin == True):
+    
+
+      
+
+
+    comp_play(str(randint(1,9)))
+    chk_win() #check to see if computer has won
+    print_scrn()
+
+
+    if (computerWin == True):
       print("Sorry, you lost. Would you like to play again? Y or N") 
       while repeats == 1:
         answer = input()
@@ -254,9 +280,6 @@ def main_game():
           return
         else:
           print("Sorry! I don't understand that answer. Try again.")
-
-
-
     
     counter = counter + 1
     if (counter == 5):
