@@ -110,6 +110,7 @@ def comp_play(a): #assign the piece to its respective place
     global nine
     global valueset
     global x_o
+    global computer_piece
     
     if (a == str(1)):
       if (one != x_o and one != computer_piece):
