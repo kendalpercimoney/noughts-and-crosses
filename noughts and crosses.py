@@ -10,6 +10,7 @@ playerWin = False
 computerWin = False
 repeats = 1
 computer_piece = "O"
+endCounter = 0
 
 #play variables
 one = ("1")
@@ -111,7 +112,26 @@ def comp_play(a): #assign the piece to its respective place
     global valueset
     global x_o
     global computer_piece
+    global endCounter
+    global repeats
+    global end
     
+    if (endCounter == 50): #given that there is a lot of recursion, print this and call it a tie (computer can't find a place to place piece)
+      print_scrn()
+      print("You have a tie! Would you like to play again?")
+    
+      while repeats == 1:
+        answer = input()
+        if (answer == "Y" or answer == "y"):
+          print ('Okay!')
+          main_game()
+        if(answer == "N" or answer == "n"):
+          end = True
+          return
+        else:
+          print("Sorry! I don't understand that answer. Try again.")
+    endCounter += 1
+
     if (a == str(1)):
       if (one != x_o and one != computer_piece):
         one = (computer_piece)
@@ -157,8 +177,70 @@ def comp_play(a): #assign the piece to its respective place
         nine = (computer_piece)
       else:
         comp_play(str(randint (1, 9)))
+        
+    
+   
 
-
+def user_place_check(a): #assign the piece to its respective place
+    global one 
+    global two
+    global three
+    global four
+    global five
+    global six
+    global seven
+    global eight
+    global nine
+    global valueset
+    global x_o
+    global computer_piece
+    global inputNum
+    
+    if (a == str(1)):
+      if (one == x_o or one == computer_piece):
+        print("You can't place your piece there! Please try again.")
+        inputNum = input()
+        user_place_check(inputNum)
+    if (a == str(2)):
+      if (two == x_o or two == computer_piece):
+        print("You can't place your piece there! Please try again.")
+        inputNum = input()
+        user_place_check(inputNum)
+    if (a == str(3)):
+      if (three == x_o or three == computer_piece):
+        print("You can't place your piece there! Please try again.")
+        inputNum = input()
+        user_place_check(inputNum)
+    if (a == str(4)):
+      if (four == x_o or four == computer_piece):
+        print("You can't place your piece there! Please try again.")
+        inputNum = input()
+        user_place_check(inputNum)
+    if (a == str(5)):
+      if (five == x_o or five == computer_piece):
+        print("You can't place your piece there! Please try again.")
+        inputNum = input()
+        user_place_check(inputNum)
+    if (a == str(6)):
+      if (six == x_o or six == computer_piece):
+        print("You can't place your piece there! Please try again.")
+        inputNum = input()
+        user_place_check(inputNum)
+    if (a == str(7)):
+      if (seven == x_o or seven == computer_piece):
+        print("You can't place your piece there! Please try again.")
+        inputNum = input()
+        user_place_check(inputNum)
+    if (a == str(8)):
+      if (eight == x_o or eight == computer_piece):
+        print("You can't place your piece there! Please try again.")
+        inputNum = input()
+        user_place_check(inputNum)
+    if (a == str(9)):
+      if (nine == x_o or nine == computer_piece):
+        print("You can't place your piece there! Please try again.")
+        inputNum = input()
+        user_place_check(inputNum)
 
 def print_scrn():
     #print game screen
@@ -220,6 +302,7 @@ def main_game():
   global end
   global x_o
   global repeats
+  global inputNum
 
   reset_board() #resets values in case this is a 2nd game
   
@@ -230,23 +313,23 @@ def main_game():
   input_check()
   print("You have chosen " + x_o + " as the piece you would like to play with.")
   print_scrn()
-  counter = 0
+  
 
   while end == False:
     print("Please select the number of the block in which you would like to place your piece:")
 
     #process
-    input_num = input()
+    inputNum = input() #get the place that the user would like to place their piece
+    user_place_check(inputNum) #check if a piece is already there
+    change_num(inputNum) #switch the number of the piece with its variable and place the piece
     
-    change_num(input_num)
 
     chk_win() #check to see if player has won
     
-    if (playerWin == True): 
+    if (playerWin == True): #given that the player has won, print this and ask if they would like to play again.
       print_scrn()
       print("You won! Would you like to play again? Y or N")
-      
-      
+  
       while repeats == 1:
         answer = input()
         if (answer == "Y" or answer == "y"):
@@ -258,35 +341,30 @@ def main_game():
         else:
           print("Sorry! I don't understand that answer. Try again.")
 
-        
-    
-
-      
-
 
     comp_play(str(randint(1,9)))
     chk_win() #check to see if computer has won
     print_scrn()
 
 
-    if (computerWin == True):
+    if (computerWin == True): #given that the computer has won, print this and ask if they would like to play again.
       print("Sorry, you lost. Would you like to play again? Y or N") 
+
       while repeats == 1:
         answer = input()
-        if (answer == "Y"):
+        if (answer == "Y" or answer == "y"):
           print ('Okay!')
           main_game()
-        if(answer == "N"):
+        if(answer == "N" or answer == "n"):
           end = True
           return
         else:
           print("Sorry! I don't understand that answer. Try again.")
-    
-    counter = counter + 1
-    if (counter == 5):
-      end = True
-  return
+
+    #code for tie is in comp_run as it relies on recursion to determine a tie
+
 #main:
+ 
 
 main_game()
 print("Thanks for playing!")
