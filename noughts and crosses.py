@@ -94,10 +94,10 @@ def change_num(a): #assign the piece to its respective place
     elif (a == str(9)):
       nine = x_o
       valueset = True
-    elif (valueset == False): #run this code again if the wrong value has been input
-      print("You must have pressed the wrong button! Try again.")
-      b = input()
-      change_num(b)
+#    elif (valueset == False): #run this code again if the wrong value has been input
+#      print("You must have pressed the wrong button! Try again.")
+#      b = input()
+#      change_num(b)
 
 def comp_play(a): #assign the piece to its respective place
     global one 
@@ -272,6 +272,16 @@ def print_scrn():
     time.sleep (print_sleep)
     print (" ----------------------------- ")
 
+def inputIsNumber(a):
+  global inputNum
+  if (a in ("1", "2", "3", "4" ,"5", "6", "7", "8", "9")):
+    return
+  
+  else:
+    print("Sorry! Please choose between 1 and 9:")
+    tempInput = input()
+    inputIsNumber(tempInput)
+    inputNum = tempInput
 
 
 def chk_win():
@@ -295,6 +305,7 @@ def input_check():
   global x_o
   if x_o == "O":
     computer_piece = "X"
+  
 
 
 #main game:
@@ -320,6 +331,7 @@ def main_game():
 
     #process
     inputNum = input() #get the place that the user would like to place their piece
+    inputIsNumber(inputNum)
     user_place_check(inputNum) #check if a piece is already there
     change_num(inputNum) #switch the number of the piece with its variable and place the piece
     
