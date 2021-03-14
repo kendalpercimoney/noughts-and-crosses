@@ -375,9 +375,7 @@ def main_game():
 
     #code for tie is in comp_run as it relies on recursion to determine a tie
 
-#main:
- 
-
+#main run:
 main_game()
 print("Thanks for playing!")
 sys.exit()
